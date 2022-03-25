@@ -1,11 +1,8 @@
 import cluster from "cluster";
-import process from "./process.js";
+import express from "express";
 import config from "./config.js";
-
-// function to calculate random number
-function randommInterval(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+import monitorRoutes from "./monitor/routes.js";
+import spawnQueue from "./queues/index.js";
 
 if (cluster.isPrimary) {
   // fork workers
@@ -19,5 +16,31 @@ if (cluster.isPrimary) {
   });
 } else {
   // run forked process
-  process(cluster.worker.id);
+  const app = express();
+
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+
+  app.use("/", monitorRoutes);
+
+  // create a queue
+  const queue = spawnQueue(cluster.worker.id);
+
+  // on post request, add a task to the queue
+  app.post("/", (req, res) => {
+    queue.add(
+      {},
+      {
+        attempts: config.DEFAULT_ATTEMPTS,
+      }
+    );
+    // send the notification with queue id
+    res.json({
+      message: `Job added to be processed by worker ${cluster.worker.id}`,
+    });
+  });
+
+  app.listen(5000, () => {
+    console.log("Server is running on port 5000");
+  });
 }
