@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bull": "^4.8.1",
+    "bull-arena": "^3.29.3",
     "express": "^4.17.3",
     "redis": "^4.0.4"
   },
