@@ -8,7 +8,7 @@ Mock client service registering requests in a process queue
 3. Start the backend server with `npm start`
 4. Start the client with `npm start --prefix client`
 
-for better load balancing start the server with `pm2 start index.js -i 0`
+for better load balancing between workers start the server with `pm2 start index.js -i 0`
 
 ## register request
 
