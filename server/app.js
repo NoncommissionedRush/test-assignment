@@ -4,7 +4,7 @@ import config from "./config.js";
 import monitorRoutes from "./monitor/routes.js";
 import spawnQueue from "./queues/index.js";
 
-if (cluster.isPrimary) {
+if (cluster.isMaster) {
   // fork workers
   for (let i = 0; i < config.NUMBER_OF_WORKERS; i++) {
     cluster.fork();
@@ -14,7 +14,7 @@ if (cluster.isPrimary) {
   cluster.on("exit", (worker, code, signal) => {
     console.log(`worker ${worker.process.pid} died`);
   });
-} else {
+} else if (cluster.isWorker) {
   // run forked process
   const app = express();
 
@@ -43,4 +43,6 @@ if (cluster.isPrimary) {
   app.listen(5000, () => {
     console.log("Server is running on port 5000");
   });
+} else {
+  console.log("unknown cluster state");
 }
