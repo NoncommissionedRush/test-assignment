@@ -10,6 +10,6 @@ export const queueConfigArray = queues.map((q) => {
   return {
     name: q,
     hostId: "redis",
-    url: "http://127.0.0.1/6379",
+    url: "http://redis/6379",
   };
 });

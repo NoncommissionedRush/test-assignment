@@ -6,15 +6,15 @@ import Redis from "ioredis";
 const spawnQueue = (workerId) => {
   let client = new Redis({
     port: 6379,
-    // host: "redis",
-    host: "127.0.0.1",
+    host: "redis",
+    // host: "127.0.0.1",
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
   });
   let subscriber = new Redis({
     port: 6379,
-    // host: "redis",
-    host: "127.0.0.1",
+    host: "redis",
+    // host: "127.0.0.1",
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
   });
@@ -29,8 +29,8 @@ const spawnQueue = (workerId) => {
         default:
           return new Redis({
             port: 6379,
-            // host: "redis",
-            host: "127.0.0.1",
+            host: "redis",
+            // host: "127.0.0.1",
             maxRetriesPerRequest: null,
             enableReadyCheck: false,
           });
