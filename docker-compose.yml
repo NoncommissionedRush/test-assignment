@@ -9,6 +9,8 @@ services:
     image: "viktormilosavljevic/test-assignment/backend"
     ports:
       - "5000:5000"
+    links:
+      - redis:redis
   frontend:
     build: 
       context: ./client
@@ -18,3 +20,8 @@ services:
       - "3000:3000"
     links:
       - backend
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
