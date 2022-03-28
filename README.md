@@ -3,12 +3,7 @@ Mock client service registering requests in a process queue
 
 ## usage
 1. Clone the repo 
-2. Install dependencies with
-`npm install && npm install --prefix client`
-3. Start the backend server with `npm start`
-4. Start the client with `npm start --prefix client`
-
-for better load balancing between workers start the server with `pm2 start index.js -i 0`
+2. cd into the root directory and run `docker compose up --build`
 
 ## register request
 
@@ -16,7 +11,7 @@ To register a user request click on the button. You will get a notification spec
 
 ## simulate load
 
-To simulate a larger server load you can run an apache benchmark bash script from the terminal. cd into the root directory and run:
+To simulate a larger server load you can run an apache benchmark bash script from the terminal. cd into the server directory and run:
 
 Example: `ab -p post_loc.txt -T application/json -c 50 -n 500 http://localhost:5000/`
 
