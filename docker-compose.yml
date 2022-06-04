@@ -7,6 +7,14 @@ services:
       context: ./server
       dockerfile: Dockerfile
     image: "viktormilosavljevic/test-assignment/backend"
+    environment:
+      - NUMBER_OF_WORKERS
+      - MIN_DELAY
+      - MAX_DELAY
+      - QUEUE_SIZE
+      - TIME_LIMIT
+      - DEFAULT_ATTEMTS
+      - TEST_ENV
     ports:
       - "5000:5000"
     links:
@@ -23,5 +31,3 @@ services:
   redis:
     restart: always
     image: redis:latest
-    ports:
-      - "6379:6379"
