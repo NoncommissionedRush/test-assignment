@@ -13,6 +13,10 @@ if (cluster.isPrimary) {
   // listen for dying workers
   cluster.on("exit", (worker, code, signal) => {
     console.log(`worker ${worker.process.pid} died`);
+    if (code !== 0 && !worker.exitedAfterDisconnect) {
+      console.log(`Starting new worker`);
+      cluster.fork();
+    }
   });
 } else {
   const app = express();
@@ -38,6 +42,6 @@ if (cluster.isPrimary) {
   });
 
   app.listen(5000, () => {
-    console.log("Server is running on port 5000");
+    console.log(`server running on port 5000 , worker ${cluster.worker.id}`);
   });
 }
